@@ -1,5 +1,6 @@
 import os
 import json
+import re
 
 CATEGORIES = {
     "flood": ["flood", "heavy rain", "flash flood"],
@@ -12,6 +13,23 @@ CATEGORIES = {
     "tornado": ["tornado"],
     "landslide": ["landslide", "mudslide"]
 }
+
+other_countries = [
+    "China", "United States", "Indonesia", "Pakistan", "Brazil", "Nigeria", "Bangladesh",
+    "Russia", "Mexico", "Japan", "Ethiopia", "Philippines", "Egypt", "Vietnam", "DR Congo", 
+    "Turkey", "Iran", "Germany", "Thailand", "United Kingdom", "France", "Italy", "Tanzania",
+    "South Africa", "Myanmar", "Kenya", "South Korea", "Colombia", "Spain", "Uganda", 
+    "Argentina", "Sudan", "Iraq", "Poland", "Canada", "Morocco", "Saudi Arabia", "Uzbekistan", 
+    "Peru", "Angola", "Afghanistan", "Malaysia", "Venezuela", "Nepal", "Ghana", "Yemen", 
+    "Mozambique", "North Korea", "Australia", "Taiwan", "Ivory Coast", "Madagascar", "Cameroon", 
+    "Niger", "Sri Lanka", "Burkina Faso", "Mali", "Romania", "Kazakhstan", "Malawi", "Chile", 
+    "Zambia", "Guatemala", "Ecuador", "Syria", "Netherlands", "Senegal", "Cambodia", "Chad", 
+    "Somalia", "Zimbabwe", "Guinea", "Rwanda", "Benin", "Burundi", "Tunisia", "Bolivia", 
+    "Belgium", "Haiti", "Cuba", "South Sudan", "Dominican Republic", "Czech Republic", 
+    "Greece", "Jordan", "Portugal", "Azerbaijan", "Sweden", "Honduras", "United Arab Emirates", 
+    "Hungary", "Tajikistan", "Belarus", "Austria", "Papua New Guinea", "Serbia", "Israel", 
+    "Switzerland", "Togo", "Sierra Leone", "Laos", "Paraguay", "Bulgaria", "Libya"
+]
 
 # List of political parties to filter out articles
 INVALID_KEYS = {
@@ -32,10 +50,16 @@ INVALID_KEYS = {
 
 NEWS_DIR = './'  # Directory containing the news articles
 
+def clean_content(content, countries):
+    """Remove occurrences of country names from the content."""
+    for country in countries:
+        content = re.sub(r'\b' + re.escape(country) + r'\b', '', content, flags=re.IGNORECASE)
+    return content
+
 def contains_invalid_key(content):
     """Check if the content contains any invalid political party references."""
     content = content.lower()
-    for abbrev, keywords in INVALID_KEYS.items().lower():
+    for abbrev, keywords in INVALID_KEYS.items():
         for keyword in keywords:
             if keyword in content:
                 return True
@@ -45,15 +69,27 @@ def categorize_articles(article):
     title = article.get('title', '').lower()
     description = article.get('description', '').lower()
 
+    # Clean content by removing country names
+    title = clean_content(title, other_countries)
+    description = clean_content(description, other_countries)
+
     # If the article contains political content, it is invalid
     if contains_invalid_key(title) or contains_invalid_key(description):
         return 'invalid_key'
-    
+
+    # Add additional context to avoid financial or unrelated articles
+    # Check for unrelated contexts like finance or market
+    unrelated_terms = ['finance', 'investment', 'market', 'funds', 'office', 'business', 'gift city']
+    if any(term in title for term in unrelated_terms) or any(term in description for term in unrelated_terms):
+        return 'uncategorized'
+
     # Categorize based on keywords in the title
     for category, keywords in CATEGORIES.items():
         for keyword in keywords:
-            if keyword in title:
+            # Check if the keyword is accompanied by natural disaster-related terms
+            if keyword in title and ('rain' in title or 'flood' in title or 'cyclone' in title):
                 return category
+
     return 'uncategorized'
 
 # Function to process articles and categorize them
