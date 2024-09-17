@@ -29,17 +29,15 @@ def get_location_from_ip(ip):
         print(f"Error fetching location information: {e}")
         return None
 
-def main():
+def ip():
     ip_address = get_public_ip()
     if ip_address:
         print(f"Public IP Address: {ip_address}")
         location = get_location_from_ip(ip_address)
         if location:
-            print(f"Location: {location}")
+            return location
         else:
-            print("Could not determine location.")
-    else:
-        print("Could not determine IP address.")
+            return False
 
 if __name__ == '__main__':
-    main()
+    ip()

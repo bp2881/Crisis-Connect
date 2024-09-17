@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,6 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
     <!-- Navigation Bar -->
     <nav>
         <div class="logo">Disaster Response</div>
@@ -48,7 +48,7 @@
     <section id="contact" class="contact">
         <h2>Contact Us</h2>
         <p>If you have any questions or need assistance, please reach out to us using the form below:</p>
-        <form>
+        <form action="/submit" method="post">
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
