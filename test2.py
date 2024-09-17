@@ -1,17 +1,25 @@
+import os
+import json
 from flask import Flask, render_template, request
-from flask_sqlalchemy import SQLAlchemy
 from iplocation import *
 
 app = Flask(__name__, static_folder='static')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////database/help.db'
-db = SQLAlchemy(app)
 
-class HelpRequest(db.Model):
-    id1 = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
-    message = db.Column(db.Text, nullable=False)
-    location = db.Column(db.Text, nullable=False)
+db_file = os.path.join('database', 'help_requests.json')
+
+if not os.path.exists('database'):
+    os.makedirs('database')
+
+def read_help_requests():
+    if os.path.exists(db_file):
+        with open(db_file, 'r') as file:
+            return json.load(file)
+    else:
+        return {"requests": []}
+
+def write_help_requests(data):
+    with open(db_file, 'w') as file:
+        json.dump(data, file, indent=4)
 
 @app.route('/')
 def home():
@@ -22,13 +30,20 @@ def submit_form():
     name = request.form['name']
     email = request.form['email']
     message = request.form['message']
-    location = ip()
-    
-    help_request = HelpRequest(name=name, email=email, message=message, location=location)
-    db.session.add(help_request)
-    db.session.commit()
-    
-    return 'Form submitted successfully!'
+    location = ip() 
+
+    data = read_help_requests()
+
+    new_request = {
+        "name": name,
+        "email": email,
+        "message": message,
+        "location": location
+    }
+    data['requests'].append(new_request)
+    write_help_requests(data)
+
+    return render_template('submit.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
