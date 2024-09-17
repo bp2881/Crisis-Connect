@@ -1,76 +1,94 @@
-# app.py (Flask)
-"""from flask import Flask, jsonify
-import tweepy  # For Twitter API
-import requests  # For news API
+from flask import Flask, render_template, request
+import requests
 import json
-
-app = Flask(__name__)"""
-# Twitter API Configuration
-consumer_key = 'xDyw8lBIBl89iN4OXwAgP43hY'
-consumer_secret = 'WVgK8r6q6CgROyrzogWq5OqBZUSRTafZBPj6sGRtzGz5GBuy4j'
-access_token = '1730900359382794240-ClmN26O5XymUoOj3q3ySwicdcif75B'
-access_token_secret = 'SeSVxozL4f0pDCe9tNdnJMZyfPDRrkANt8UmmcT2N9QSj'
-from flask import Flask, redirect, url_for, session, request
-import tweepy
-import os
+from train import train  
 
 app = Flask(__name__)
-app.secret_key = 'AAAAAAAAAAAAAAAAAAAAACaqvwEAAAAAL6rBeSs889JtD55q%2BZW%2BnEVbESE%3DQu2eFHSqyf2ef7V43cTKjnAylUQ6CIEt7590Jki8vgYeVzCFb9' 
-callback_url = 'http://127.0.0.1:5000/callback'  # Same as your registered callback URL
 
-# Step 1: Redirect to Twitter for Authorization
-@app.route('/login')
-def login():
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret, callback_url)
+# API keys for NewsAPI and TheNews API
+newsapi_key = '3b77d430512c4f9798369125496c451a'
+thenewsapi_key = 'jsDXNAmpvW54XQwBICNadREuI2ylWFKAcfgoQ5NO'  
+
+# Function to fetch articles from NewsAPI
+def fetch_newsapi_articles():
+    url = 'https://newsapi.org/v2/everything'
+    params = {
+        'q': 'disaster',
+        'sortBy': 'publishedAt',
+        'language': 'en',
+        'apiKey': newsapi_key,
+        'country': 'in'  # Fetch articles related to India
+    }
+
+    response = requests.get(url, params=params)
+    news_data = response.json()
+
+    if news_data.get('status') == 'ok':
+        return news_data['articles']
+    return []
+
+# Function to fetch articles from TheNews API
+def fetch_thenewsapi_articles():
+    url = 'https://api.thenewsapi.com/v1/news/all'
+    params = {
+        'api_token': thenewsapi_key,
+        'search': 'disaster',
+        'language': 'en',
+        'country': 'in',  # Fetch articles related to India
+        'published_on': '2023-09-17'  # Fetch recent articles
+    }
+
+    response = requests.get(url, params=params)
+    news_data = response.json()
+
+    if 'data' in news_data:
+        return news_data['data']
+    return []
+
+# Function to fetch, combine, and remove duplicate articles
+def fetch_combined_articles():
+    # Fetch articles from both APIs
+    newsapi_articles = fetch_newsapi_articles()
+    thenewsapi_articles = fetch_thenewsapi_articles()
+
+    # Combine the articles
+    combined_articles = newsapi_articles + thenewsapi_articles
+
+    # Remove duplicates using a set for descriptions
+    unique_articles = []
+    seen_descriptions = set()
+    
+    for article in combined_articles:
+        description = article.get('description', '')
+        if description and description not in seen_descriptions:
+            unique_articles.append(article)
+            seen_descriptions.add(description)
+    
+    return unique_articles
+
+# Function to save categorized articles in separate JSON files
+def save_to_json(category, article_data):
+    filename = f"{category}.json"
     try:
-        # Redirect user to Twitter to authorize
-        redirect_url = auth.get_authorization_url()
-        session['request_token'] = auth.request_token  # Store the request token for the next step
-        return redirect(redirect_url)
-    except tweepy.TweepError as e:
-        return f'Error! Failed to get request token. {e}'
+        with open(filename, 'r', encoding="utf-8") as file:
+            existing_data = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        existing_data = []
 
-# Step 2: Handle the callback from Twitter
-@app.route('/callback')
-def callback():
-    request_token = session.get('request_token')
-    del session['request_token']  # We no longer need this
+    existing_data.append(article_data)
 
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret, callback_url)
-    auth.request_token = request_token
+    with open(filename, 'w', encoding="utf-8") as file:
+        json.dump(existing_data, file, ensure_ascii=False, indent=4)
 
-    try:
-        # Get the access token
-        auth.get_access_token(request.args.get('oauth_verifier'))
-        session['access_token'] = auth.access_token
-        session['access_token_secret'] = auth.access_token_secret
-    except tweepy.TweepError as e:
-        return f'Error! Failed to get access token. {e}'
+# Main logic (part of main.py)
+combined_articles = fetch_combined_articles()
 
-    # At this point, the user is authenticated and we have the access tokens
-    return redirect(url_for('welcome'))
+for article in combined_articles:
+    description = article.get("description", "")
+    filtered = train(description)
 
-# Welcome route after successful login
-@app.route('/welcome')
-def welcome():
-    access_token = session.get('access_token')
-    access_token_secret = session.get('access_token_secret')
+    if filtered:
+        article_text, category = filtered  # Get the article and category from the train function
+        save_to_json(category, article)  # Save article in its respective category file
+        print(f"Disaster-related article categorized as {category}: {article_text}")
 
-    if not access_token:
-        return redirect(url_for('login'))
-
-    # Use the access token to authenticate API calls
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-
-    api = tweepy.API(auth)
-
-    # Get the authenticated user's profile
-    user = api.me()
-    return f'Hello, {user.name}! Welcome to the app!'
-
-if __name__ == '__main__':
-    app.run()
-
-    articles = news_data.get('articles', [])
-    print(jsonify(articles))
