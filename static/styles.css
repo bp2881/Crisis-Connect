@@ -130,7 +130,7 @@ nav ul li a {
 .contact textarea {
     width: 100%;
     max-width: 500px;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
@@ -138,15 +138,15 @@ nav ul li a {
 }
 
 .contact textarea {
-    height: 150px;
+    height: 50px;
     resize: none;
 }
 
 .contact button {
     background-color: #007bff;
     color: white;
-    padding: 15px 30px;
-    font-size: 18px;
+    padding: 12px 25px;
+    font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -160,7 +160,7 @@ nav ul li a {
 /* Footer */
 footer {
     text-align: center;
-    padding: 20px;
+    padding: 2px;
     background-color: #007bff;
     color: white;
     position: fixed;
