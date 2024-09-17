@@ -91,7 +91,73 @@ nav ul li a {
 .feature-item p {
     color: #666;
     font-size: 16px;
+}
 
+/* Contact Section */
+.contact {
+    padding: 60px 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.contact h2 {
+    font-size: 36px;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.contact p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.contact label {
+    font-size: 16px;
+    color: #333;
+    align-self: flex-start;
+}
+
+.contact input[type="text"],
+.contact input[type="email"],
+.contact textarea {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.contact textarea {
+    height: 150px;
+    resize: none;
+}
+
+.contact button {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.contact button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
 footer {
     text-align: center;
     padding: 20px;
@@ -100,4 +166,4 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-} 
+}
