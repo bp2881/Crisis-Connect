@@ -1,31 +1,35 @@
+/* General styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-h1, h2, h3 {
     color: #333;
+    background-color: #f0f9ff; /* Very light blue */
 }
 
+/* Heading styles */
+h1, h2, h3 {
+    color: #2c3e50; /* Dark gray for contrast */
+}
 
+/* Navigation styles */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: #007bff;
+    padding: 15px 20px;
+    background-color: #34495e; /* Dark blue-gray */
+    color: white;
 }
 
 nav .logo {
-    color: white;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
 }
 
 nav ul {
-    list-style-type: none;
+    list-style: none;
     display: flex;
     gap: 20px;
 }
@@ -38,45 +42,76 @@ nav ul li a {
     color: white;
     text-decoration: none;
     font-size: 18px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
+/* Different colors for each menu item */
+nav ul li a[href="#home"] {
+    background-color: #3498db; /* Bright blue */
+}
 
+nav ul li a[href="#features"] {
+    background-color: #e74c3c; /* Bright red */
+}
+
+nav ul li a[href="#contact"] {
+    background-color: #2ecc71; /* Bright green */
+}
+
+/* Hover effects for menu items */
+nav ul li a:hover {
+    color: #fff;
+    background-color: #1abc9c; /* Teal */
+}
+
+/* Hero section styles */
 .hero {
-    background-color: #f4f4f4;
+    background-color: #ffeb3b; /* Bright yellow */
+    color: #2c3e50;
     padding: 100px 20px;
     text-align: center;
+    border-bottom: 5px solid #f1c40f; /* Gold */
 }
 
 .hero h1 {
     font-size: 48px;
-    color: #007bff;
+    margin: 0;
+    font-weight: 700;
 }
 
 .hero p {
     font-size: 20px;
-    color: #666;
     margin: 20px 0;
+    line-height: 1.5;
 }
 
 .cta-button {
-    background-color: #007bff;
+    background-color: #e74c3c; /* Bright red */
     color: white;
     padding: 15px 30px;
     text-decoration: none;
     border-radius: 5px;
     font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s;
 }
 
+.cta-button:hover {
+    background-color: #c0392b; /* Darker red */
+}
 
+/* Features section styles */
 .features {
     padding: 60px 20px;
     text-align: center;
-    background-color: #f9f9f9;
+    background-color: #ffffff; /* White */
 }
 
 .features h2 {
     font-size: 36px;
-    color: #007bff;
+    color: #3498db; /* Bright blue */
     margin-bottom: 20px;
 }
 
@@ -90,37 +125,38 @@ nav ul li a {
 
 .feature-item {
     max-width: 300px;
-    background-color: white;
+    background-color: #f5f5f5; /* Very light gray */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .feature-item h3 {
-    color: #007bff;
+    color: #e74c3c; /* Bright red */
+    margin: 0 0 10px 0;
 }
 
 .feature-item p {
-    color: #666;
+    color: #333;
     font-size: 16px;
 }
 
-
+/* Contact section styles */
 .contact {
     padding: 60px 20px;
-    background-color: #f4f4f4;
+    background-color: #ffeb3b; /* Bright yellow */
     text-align: center;
 }
 
 .contact h2 {
     font-size: 36px;
-    color: #007bff;
+    color: #2ecc71; /* Bright green */
     margin-bottom: 20px;
 }
 
 .contact p {
     font-size: 18px;
-    color: #666;
+    color: #333;
     margin-bottom: 40px;
 }
 
@@ -128,7 +164,9 @@ nav ul li a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .contact .form-group {
@@ -146,8 +184,8 @@ nav ul li a {
 .contact input[type="tel"],
 .contact textarea {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
+    padding: 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
     box-sizing: border-box;
@@ -159,7 +197,7 @@ nav ul li a {
 }
 
 .contact button {
-    background-color: #007bff;
+    background-color: #2ecc71; /* Bright green */
     color: white;
     padding: 12px 25px;
     font-size: 16px;
@@ -170,17 +208,40 @@ nav ul li a {
 }
 
 .contact button:hover {
-    background-color: #0056b3;
+    background-color: #27ae60; /* Darker green */
 }
 
-
+/* Footer styles */
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #007bff;
+    background-color: #34495e; /* Dark blue-gray */
     color: white;
     position: fixed;
     bottom: 0;
     width: 100%;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
 }
+
+/* Emergency Button */
+.emergency-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #e74c3c; /* Bright red */
+    color: white;
+    padding: 15px 25px;
+    text-decoration: none;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+.emergency-button:hover {
+    background-color: #c0392b; /* Darker red */
+}
+
+
 
