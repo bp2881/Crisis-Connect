@@ -1,4 +1,5 @@
-*.json
+cyclone.json
+earthquake.json
+flood.json
 __pycache__/
 *.pyc
-instance/

@@ -5,7 +5,7 @@ IPGEOLOCATION_API_KEY = 'b03d06ec5b3e447bb3642627a027c32a'
 def get_public_ip():
     try:
         response = requests.get(f'https://api.ipgeolocation.io/getip')
-        response.raise_for_status()  # Check for HTTP errors
+        response.raise_for_status()
         return response.json().get('ip')
     except requests.RequestException as e:
         print(f"Error fetching IP address: {e}")
@@ -38,6 +38,3 @@ def ip():
             return location
         else:
             return False
-
-if __name__ == '__main__':
-    ip()

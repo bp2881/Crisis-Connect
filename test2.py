@@ -2,6 +2,8 @@ import os
 import json
 from flask import Flask, render_template, request
 from iplocation import *
+from sms import *
+
 
 app = Flask(__name__, static_folder='static')
 
@@ -24,20 +26,28 @@ def write_help_requests(data):
 @app.route('/')
 def home():
     return render_template('index.html')
-"""
+
 @app.route('/emergency')
 def emergency():
+    ip_location = ip()
+    ip_address = get_public_ip()
+    phone = '+919100026483'
+    message = f'An emergency request has been received from {ip_location} \nip- {ip_address}'
+
+    r = send_sms(message=message, phno=phone)
     return render_template('emergency.html')
-"""
+
+
 @app.route('/submit', methods=['POST'])
 def submit_form():
-    location = ip() 
+    location = ip()
     name = request.form['name']
-    phno = request.form['phno']
+    phno = request.form['phone']
     message = request.form['message']
-
+    message = f'{name} has requested help\n{message}\nContact number - {phno}\nArea - {location}'
+    send_sms(message=message)
+    
     data = read_help_requests()
-
     new_request = {
         "name": name,
         "phno": phno,
