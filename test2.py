@@ -24,26 +24,30 @@ def write_help_requests(data):
 @app.route('/')
 def home():
     return render_template('index.html')
-
+"""
+@app.route('/emergency')
+def emergency():
+    return render_template('emergency.html')
+"""
 @app.route('/submit', methods=['POST'])
 def submit_form():
-    name = request.form['name']
-    email = request.form['email']
-    message = request.form['message']
     location = ip() 
+    name = request.form['name']
+    phno = request.form['phno']
+    message = request.form['message']
 
     data = read_help_requests()
 
     new_request = {
         "name": name,
-        "email": email,
+        "phno": phno,
         "message": message,
         "location": location
     }
     data['requests'].append(new_request)
     write_help_requests(data)
 
-    return render_template('submit.html')
+    return render_template('submit.html', iplocation=location)
 
 if __name__ == '__main__':
     app.run(debug=True)

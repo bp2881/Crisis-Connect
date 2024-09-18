@@ -31,7 +31,6 @@ other_countries = [
     "Switzerland", "Togo", "Sierra Leone", "Laos", "Paraguay", "Bulgaria", "Libya"
 ]
 
-# List of political parties to filter out articles
 INVALID_KEYS = {
     "BJP": ["bjp", "bharatiya janata party"],
     "INC": ["inc", "indian national congress", "congress", "cong"],
@@ -48,10 +47,9 @@ INVALID_KEYS = {
     "Politics": ["political", "debate"]
 }
 
-NEWS_DIR = './'  # Directory containing the news articles
+NEWS_DIR = './'  
 
 def clean_content(content, countries):
-    """Remove occurrences of country names from the content."""
     for country in countries:
         content = re.sub(r'\b' + re.escape(country) + r'\b', '', content, flags=re.IGNORECASE)
     return content
