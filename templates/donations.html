@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Disaster Donations{% endblock %}
+
+{% block content %}
+<!-- Donation Section -->
+<section id="donations" class="donations">
+    <h2>Support Disaster Relief Efforts</h2>
+    <p>Your donations can help save lives and provide essential resources to those affected by disasters.</p>
+
+    <form action="/donate" method="post" class="donation-form">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Donation Amount (INR):</label>
+            <input type="number" id="amount" name="amount" min="1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="payment-method">Payment Method:</label>
+            <select id="payment-method" name="payment_method" required>
+                <option value="gpay">GPay</option>
+                <option value="phonepe">PhonePe</option>
+                <option value="credit_card">Credit Card</option>
+                <option value="debit_card">Debit Card</option>
+                <option value="bank_transfer">Bank Transfer</option>
+            </select>
+        </div>
+
+        <button type="submit" class="donate-button">Donate Now</button>
+    </form>
+
+    <p>Thank you for your generosity and support during these challenging times.</p>
+</section>
+{% endblock %}
+
