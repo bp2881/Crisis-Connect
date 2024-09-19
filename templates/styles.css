@@ -68,11 +68,11 @@ nav ul li a:hover {
 
 /* Hero section styles */
 .hero {
-    background-color: #ffeb3b; /* Bright yellow */
+    background-color: #ffffff; /* Bright yellow */
     color: #2c3e50;
     padding: 100px 20px;
     text-align: center;
-    border-bottom: 5px solid #f1c40f; /* Gold */
+    border-bottom: 5px solid #ffffff; /* Gold */
 }
 
 .hero h1 {
@@ -87,6 +87,7 @@ nav ul li a:hover {
     line-height: 1.5;
 }
 
+/* Call-to-action button */
 .cta-button {
     background-color: #e74c3c; /* Bright red */
     color: white;
@@ -102,7 +103,8 @@ nav ul li a:hover {
     background-color: #c0392b; /* Darker red */
 }
 
-/* Donation Button */
+
+/* Donation button */
 .donation-button {
     background-color: #ff9800; /* Orange background */
     color: white; /* White text color */
@@ -111,12 +113,15 @@ nav ul li a:hover {
     border-radius: 5px; /* Rounded corners */
     font-size: 18px; /* Font size */
     font-weight: bold; /* Bold text */
-    transition: background-color 0.3s; /* Smooth transition on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition on hover */
 }
 
 .donation-button:hover {
     background-color: #e68a00; /* Darker orange on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
 }
+
 
 /* Area Information Section */
 .area-info {
@@ -130,7 +135,23 @@ nav ul li a:hover {
     margin: 0;
     font-weight: bold;
 }
+ 
 
+.parallax {
+    background-image: url("https://images.unsplash.com/photo-1475776408506-9a5371e7a068?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bmF0dXJhbCUyMGRpc2FzdGVyfGVufDB8fDB8fHww");
+  
+    /* Set a specific height */
+    height: 500px;
+  
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+
+  
 /* Features section styles */
 .features {
     padding: 60px 20px;
