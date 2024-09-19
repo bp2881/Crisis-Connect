@@ -103,7 +103,6 @@ nav ul li a:hover {
     background-color: #c0392b; /* Darker red */
 }
 
-
 /* Donation button */
 .donation-button {
     background-color: #ff9800; /* Orange background */
@@ -122,7 +121,6 @@ nav ul li a:hover {
     transform: translateY(-2px); /* Slight lift effect on hover */
 }
 
-
 /* Area Information Section */
 .area-info {
     text-align: left; /* Align text to the left */
@@ -135,23 +133,41 @@ nav ul li a:hover {
     margin: 0;
     font-weight: bold;
 }
- 
 
+/* Recent News Section */
+.recent-news {
+    text-align: left; /* Align text to the left */
+    margin: 50px 20px; /* Add some margin for spacing */
+    background-color: #ffffff; /* White background */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+}
+
+.recent-news h2 {
+    font-size: 32px;
+    color: #e74c3c; /* Bright red */
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Parallax Image Section */
 .parallax {
-    background-image: url("https://images.unsplash.com/photo-1475776408506-9a5371e7a068?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bmF0dXJhbCUyMGRpc2FzdGVyfGVufDB8fDB8fHww");
-  
-    /* Set a specific height */
+    background-image: url("https://t3.ftcdn.net/jpg/08/44/56/80/360_F_844568002_EcqFFwkLLuSysE49DQWLIbC81wOUcCXW.jpg");
     height: 500px;
-  
-    /* Create the parallax scrolling effect */
-    background-attachment: fixed;
+    background-attachment: fixed; /* Fixed position for parallax */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-  }
+}
 
+.parallax img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85; /* Slight transparency to blend with text */
+}
 
-  
 /* Features section styles */
 .features {
     padding: 60px 20px;
@@ -293,22 +309,6 @@ footer {
     background-color: #c0392b; /* Darker red */
 }
 
-/* Parallax Image Section */
-.parallax {
-    height: 500px;
-    background-attachment: fixed; /* Fixed position for parallax */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.parallax img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.85; /* Slight transparency to blend with text */
-}
-
 /* Media Queries */
 @media (max-width: 768px) {
     .hero {
@@ -320,7 +320,6 @@ footer {
     }
 
     .parallax {
-        background-attachment: scroll; /* Disable parallax effect on small screens */
-    }
-}
+        background-attachment: scroll; /* Disable parallax effect on
+
 
