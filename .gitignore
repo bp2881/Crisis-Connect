@@ -3,3 +3,4 @@ earthquake.json
 flood.json
 __pycache__/
 *.pyc
+keys.json
